@@ -63,6 +63,7 @@ if __name__ == '__main__':
     print classifier.get_status(pname)
     splitter = re.compile(options.column_delimiter)
 
+    trained_count=0
     #是否进行训练
     if(options.train=="true"):
         for line in open(options.train_file):
@@ -71,6 +72,7 @@ if __name__ == '__main__':
                 label, dat=array
                 datum = types.datum(  [[options.key, dat]], [] )
                 classifier.train(pname,[(label,datum)])
+                trained_count=trained_count+1
 
         print classifier.get_status(pname)
 
@@ -97,4 +99,5 @@ if __name__ == '__main__':
                     result = "NG"
                 print result + "," + label + ", " + estm[0] + ", " + str(estm[1])
 
+    print "trained:%d" % (trained_count)
     print "precision:%.2f" % (hit/total)
